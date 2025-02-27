@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Category, Product, ProductImage
-from taggit.serializers import TagListSerializerField
+from taggit.serializers import (TagListSerializerField, TaggitSerializer)
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,7 +12,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
         model = ProductImage
         fields = ["id", "image"]
 
-class ProductSerializer(serializers.ModelSerializer):
+class ProductSerializer(TaggitSerializer, serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
     category_id = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(), source="category", write_only=True
@@ -22,11 +22,12 @@ class ProductSerializer(serializers.ModelSerializer):
     uploaded_images = serializers.ListField(
         child=serializers.ImageField(), write_only=True, required=False
     ) 
+    price = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
         fields = [
-            "id", "name", "description", "price", "category", "category_id", "stock", "tags", 
+            "id", "name", "description", "price", "category", "category_id", "tags", 
             "created_at", "updated_at", "images", "uploaded_images"
         ]
 
@@ -36,3 +37,7 @@ class ProductSerializer(serializers.ModelSerializer):
         for image in uploaded_images:
             ProductImage.objects.create(product=product, image=image)
         return product
+    
+    def get_price(self, obj):
+        """Return the computed price of the product"""
+        return getattr(obj, "min_price", obj.price)

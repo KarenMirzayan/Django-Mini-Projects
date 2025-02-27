@@ -6,6 +6,8 @@ from django.core.cache import cache
 from .models import Category, Product
 from .serializers import CategorySerializer, ProductSerializer
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
+from django.db.models import Min, Q
+from .filters import ProductFilter
 
 
 class CategoryListCreateView(generics.ListCreateAPIView):
@@ -39,9 +41,14 @@ class ProductListCreateView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ["category", "tags__name", "price"]
+    filterset_class = ProductFilter
     search_fields = ["name", "description"]
-    ordering_fields = ["name", "price", "created_at"]
+    ordering_fields = ["name", "created_at"] 
+
+    def get_queryset(self):
+        return Product.objects.annotate(
+            min_price=Min("trade_orders__price", filter=Q(trade_orders__order_type="sell", trade_orders__status="pending"))
+        )
 
     @method_decorator(cache_page(60 * 15, key_prefix="product_list"))
     def list(self, request, *args, **kwargs):
@@ -52,6 +59,7 @@ class ProductListCreateView(generics.ListCreateAPIView):
         if self.request.method == 'POST':
             self.permission_classes = [IsAdminUser]
         return super().get_permissions()
+
 
 
 class ProductRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
