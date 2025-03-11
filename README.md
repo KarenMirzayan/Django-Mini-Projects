@@ -1,2 +1,1 @@
-## Mini project 1 defense
-https://kbtuedu.sharepoint.com/:v:/s/DjangoMini/EQnT9V76459LpGaI_XxqBLUBebM_h2OUgoQQEUuMg_TbRw?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=Dd33fi
+
