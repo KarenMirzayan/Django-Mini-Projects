@@ -1,4 +1,3 @@
-// src/pages/Login.tsx
 import React, {useContext, useState} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +17,7 @@ const Login: React.FC = () => {
       localStorage.setItem('refresh_token', response.data.refresh);
       setToken(response.data.access);
       setMessage('Login successful');
-      setTimeout(() => navigate('/dashboard'), 2);
+      setTimeout(() => navigate('/dashboard'), 1000);
     } catch (error: any) {
       setMessage(error.response?.data?.detail || 'Login failed');
     }

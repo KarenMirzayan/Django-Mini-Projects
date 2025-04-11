@@ -1,4 +1,3 @@
-// src/pages/VerifyEmail.tsx
 import React, { useEffect, useState, useContext } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -22,7 +21,7 @@ const VerifyEmail: React.FC = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:8000/api/verify-email/', {
+        const response = await axios.get('http://localhost:8000/api/verify-email', {
           params: { token },
         });
 
@@ -32,7 +31,7 @@ const VerifyEmail: React.FC = () => {
         setToken(access_token); // Update context
 
         setMessage(response.data.message);
-        setTimeout(() => navigate('/login'), 2000); // Redirect to login after 2 seconds
+        setTimeout(() => navigate('/login'), 2000);
       } catch (err: any) {
         setError(err.response?.data?.error || 'Failed to verify email');
         setLoading(false);

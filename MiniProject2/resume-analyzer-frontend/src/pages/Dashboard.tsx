@@ -1,4 +1,3 @@
-// src/pages/Dashboard.tsx
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -79,7 +78,7 @@ const Dashboard: React.FC = () => {
   }, [token]);
 
   const handleUploadSuccess = (resumeId: string) => {
-    navigate(`/resume/${resumeId}`);
+    setTimeout(() => navigate(`/resume/${resumeId}`), 2000);
   };
 
   const handleJobSubmit = async (e: React.FormEvent) => {

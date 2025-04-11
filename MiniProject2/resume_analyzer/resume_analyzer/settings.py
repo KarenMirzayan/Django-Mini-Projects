@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 import pymysql
 pymysql.install_as_MySQLdb()
@@ -100,12 +100,6 @@ DATABASES = {
     }
 }
 
-# connect(
-#     db='resume_analysis',
-#     host='localhost',
-#     port=27017,
-# )
-
 MONGODB_DATABASES = {
     'default': {
         'name': 'resume_analysis',
@@ -176,7 +170,7 @@ CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',  # Vite dev server
+    'http://localhost:5173',
 ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = [
@@ -192,6 +186,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp-mail.outlook.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'k_mirzayan@kbtu.kz'  # Replace with your Outlook email
-EMAIL_HOST_PASSWORD = '1234_Mir'    # Replace with your Outlook password or app password
+EMAIL_HOST_USER = 'k_mirzayan@kbtu.kz'
+EMAIL_HOST_PASSWORD = '1234_Mir'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+}

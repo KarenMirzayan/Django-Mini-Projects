@@ -1,10 +1,7 @@
-// src/pages/ResumeDetail.tsx
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../App';
-
-// Define the shape of the resume analysis data
 interface ResumeAnalysis {
   skills: string[];
   formatting: boolean;
@@ -93,7 +90,7 @@ const ResumeDetail: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="p-4 bg-gray-50 rounded">
             <h2 className="text-lg font-semibold text-gray-700">Score</h2>
-            <p className="text-2xl font-bold text-blue-600">{resume.score.toFixed(1)}</p>
+            <p className="text-2xl font-bold text-blue-600">{resume.score.toFixed(1)}/100</p>
           </div>
           <div className="p-4 bg-gray-50 rounded">
             <h2 className="text-lg font-semibold text-gray-700">Word Count</h2>

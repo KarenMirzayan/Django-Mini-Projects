@@ -28,7 +28,7 @@ class JobListing(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class Resume(Document):  # MongoDB model
+class Resume(Document):  # MongoDB
     user_id = IntField(required=True)
     file = FileField()
     extracted_data = DictField(default=dict)

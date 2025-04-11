@@ -1,4 +1,3 @@
-// src/components/Navbar.tsx
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../App';

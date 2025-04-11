@@ -17,5 +17,5 @@ class DBRouter:
             elif model_name == 'log':
                 return db == 'mysql'
             elif model_name == 'resume':
-                return False  # No migrations for Resume (MongoDB)
+                return False  # MongoDB
         return None

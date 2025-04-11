@@ -1,4 +1,3 @@
-// src/components/ResumeUpload.tsx
 import React, { useCallback, useContext } from 'react';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';

@@ -93,7 +93,6 @@ class ResumeDetailView(APIView):
             if resume.user_id != request.user.id:
                 return Response({'error': 'You do not have permission to view this resume'}, status=403)
 
-            # Debug: Log the raw extracted_data
             print(f"Raw extracted_data: {resume.extracted_data}")
             if not resume.extracted_data:
                 return Response({'error': 'Extracted data is empty'}, status=400)
@@ -261,8 +260,9 @@ class JobListingListView(APIView):
 
     def get(self, request):
         try:
-            if request.user.role == 'recruiter':
-                job_listings = JobListing.objects.filter(recruiter=request.user)
+            recruiter_id = request.query_params.get('recruiter_id')
+            if recruiter_id is not None:
+                job_listings = JobListing.objects.filter(recruiter=recruiter_id)
             else:
                 job_listings = JobListing.objects.all()
 
@@ -306,7 +306,7 @@ class RegisterView(APIView):
             )
             user.save()
 
-            verification_link = f"http://localhost:5173/api/verify-email/?token={token}"
+            verification_link = f"http://localhost:5173/verify-email?token={token}"
             subject = "Verify Your Email Address"
             message = f"Hi {user.username},\n\nPlease verify your email by clicking this link: {verification_link}\n\nThanks,\nResume Analyzer Team"
             send_mail(subject, message, from_email=None, recipient_list=[user.email], fail_silently=False)
